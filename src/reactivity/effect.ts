@@ -1,7 +1,7 @@
 import { extend } from '../shared'
-type Option = {
-  onStop?: ()=>any
-  scheduler?: ()=> any
+type Option <T = unknown>= {
+  onStop?: ()=>T
+  scheduler?: ()=> T
 }
 export type DepSet = Set<ReactiveEffect>
 let activityEffect: ReactiveEffect
