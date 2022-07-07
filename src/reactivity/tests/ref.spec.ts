@@ -1,5 +1,5 @@
 import { effect } from "../effect"
-import { isRef, ref, unRef } from "../ref"
+import { isRef, proxyRefs, ref, unRef } from "../ref"
 
 describe('ref', ()=>{
   it('ref happy path', ()=>{
@@ -57,5 +57,20 @@ describe('ref', ()=>{
     expect(unRef(a)).toBe(1)
     expect(unRef('a')).toBe('a')
     expect(unRef(dummyBoolen)).toBe(false)
+  })
+  it('proxyRefs test', ()=>{
+    const demo = {
+      name: 'Dom',
+      age: ref(28)
+    }
+    const dummy = proxyRefs(demo)
+    expect(demo.age.value).toBe(28)
+    expect(dummy.age).toBe(28)
+    dummy.age = 18
+    expect(dummy.age).toBe(18)
+    expect(demo.age.value).toBe(18)
+    dummy.age = ref(30)
+    expect(dummy.age).toBe(30)
+    expect(demo.age.value).toBe(30)
   })
 })
