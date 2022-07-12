@@ -1,4 +1,8 @@
+/**
+ * @desc 拓展对象属性
+ */
 export const extend = Object.assign
+
 export function isObject(val){
   return val !== null && typeof val === 'object'
 }

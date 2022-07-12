@@ -11,6 +11,14 @@ function createReactiv(row){
 function createReadonly(row){
   return createProxyObj(row, readonlyHandler)
 }
-function createProxyObj(row, handler){
+
+/**
+ * 
+ * @param {object} row 
+ * @param handler
+ * @returns new Proxy 
+ * @desc 创建响应式实例
+ */
+function createProxyObj<T extends object>(row:T, handler:ProxyHandler<any>){
   return new Proxy(row, handler)
 }

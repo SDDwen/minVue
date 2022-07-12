@@ -40,6 +40,7 @@ function clearEffectFn(){
   seflt.deps.length = 0
   this.onStop && this.onStop()
 }
+
 export function effect(cb: ()=> any, option?: Option){
   const _effect = new ReactiveEffect(cb)
   _effect.run()
@@ -49,7 +50,7 @@ export function effect(cb: ()=> any, option?: Option){
   return runner
 }
 
-// 依赖收集
+/** **/ 
 const targeMap = new Map()
 export function track(target, key){
   if(!isTracking()){

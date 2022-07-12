@@ -20,7 +20,6 @@ class RefImpl{
     this._rowValue = newValue
     this._value = convert(newValue)
     triggerRefValue(this.dep)
-
   }
 }
 
@@ -52,17 +51,18 @@ export function unRef(ref){
   return isRef(ref)? ref.value : ref
 }
 
-const shallowUnWrapHandler:ProxyHandler<any> = {   
-  get(target, key){
-    return unRef(Reflect.get(target, key))
+const shallowUnWrapHandler: ProxyHandler<any> = {
+  get(target, key, receiver) {
+    return unRef(Reflect.get(target, key, receiver))
   },
-  set(target, key, value){
+  set(target, key, value, receiver) {
     if(isRef(target[key]) && !isRef(value)){
-      target[key].value  = value
+      target[key].value = value
       return true
+    }else{
+      return Reflect.set(target, key, value, receiver)
     }
-    return Reflect.set(target, key, value)
-  }
+  },
 }
 
 export function proxyRefs<T extends object>(row: T){
